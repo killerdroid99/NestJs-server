@@ -22,6 +22,6 @@ export class AuthService {
 
     const data = { username: input.username, password: hashedPassword };
 
-    this.usersService.create(data);
+    return this.usersService.create(data);
   }
 }

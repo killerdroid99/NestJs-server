@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from 'src/auth/dtos/CreateUserDto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -16,6 +16,15 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto) {
-    return await this.db.user.create({ data: createUserDto });
+    const existingUser = await this.db.user.findUnique({
+      where: { username: createUserDto.username },
+    });
+
+    if (existingUser) {
+      throw new HttpException(
+        'User with this username already exists',
+        HttpStatus.CONFLICT,
+      );
+    } else return await this.db.user.create({ data: createUserDto });
   }
 }

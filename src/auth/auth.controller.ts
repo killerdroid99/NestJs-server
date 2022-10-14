@@ -12,7 +12,8 @@ import {
 import { User } from '@prisma/client';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard, AuthenticatedGuard } from './local-auth.guard';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { AuthenticatedGuard } from './guards/authenticated.guard';
 
 export type CreateUserInput = {
   username: string;

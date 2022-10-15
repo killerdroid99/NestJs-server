@@ -18,6 +18,8 @@ async function bootstrap() {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days expiration time
         // maxAge: 1000 * 30, // 30 seconds expiration time for testing purposes
+        // sameSite: 'lax',
+        // secure: process.env.ENV === 'prod' ? true : false,
       },
       store: new PrismaSessionStore(prisma, {
         checkPeriod: 2 * 60 * 1000, //ms

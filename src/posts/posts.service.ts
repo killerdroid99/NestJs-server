@@ -17,9 +17,9 @@ import { UpdatePostDto } from './dtos/UpdatePostDto';
 export class PostsService {
   constructor(private db: PrismaService) {}
 
-  create(createPostDto: CreatePostDto) {
+  create(createPostDto: CreatePostDto, userId: string) {
     return this.db.post.create({
-      data: createPostDto,
+      data: { ...createPostDto, userId },
     });
   }
 

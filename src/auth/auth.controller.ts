@@ -31,19 +31,19 @@ export class AuthController {
   @Post('login')
   @UseGuards(LocalAuthGuard)
   async login(@Req() req: UserRequest, @Res() res: Response) {
-    return res.send(HttpStatus.OK);
+    return res.sendStatus(HttpStatus.OK);
   }
 
   @Post('logout')
   @UseGuards(AuthenticatedGuard)
   async logout(@Req() req: Request, @Res() res: Response) {
     req.logout((err) => {
-      return err ? res.send(400) : res.send(200);
+      return err ? res.sendStatus(400) : res.sendStatus(200);
     });
   }
 
   @Post('signup')
-  signUp(@Req() req, @Body() input: CreateUserInput) {
+  async signUp(@Req() req, @Body() input: CreateUserInput) {
     return this.authService.userSignup(input);
   }
 
@@ -60,7 +60,7 @@ export class AuthController {
 
   @Get('status')
   @UseGuards(AuthenticatedGuard)
-  async status(@Req() req: Request, @Res() res: Response) {
-    res.send(req.user);
+  status(@Session() session: Record<string, any>) {
+    return session.passport.user;
   }
 }

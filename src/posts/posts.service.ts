@@ -28,6 +28,13 @@ export class PostsService {
       orderBy: {
         createdAt: sortBy || 'desc',
       },
+      include: {
+        user: {
+          select: {
+            username: true,
+          },
+        },
+      },
     });
   }
 

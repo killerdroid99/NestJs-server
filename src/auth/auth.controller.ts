@@ -44,7 +44,7 @@ export class AuthController {
 
   @Post('signup')
   async signUp(@Req() req, @Body() input: CreateUserInput) {
-    return this.authService.userSignup(input);
+    return await this.authService.userSignup(input);
   }
 
   @Get('')

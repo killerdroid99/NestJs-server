@@ -26,11 +26,14 @@ export class PostsController {
   @Post()
   @UseGuards(AuthenticatedGuard)
   @UsePipes(new ValidationPipe())
-  create(
+  async create(
     @Body() createPostDto: CreatePostDto,
     @Session() session: Record<string, any>,
   ) {
-    return this.postsService.create(createPostDto, session.passport.user.id);
+    return await this.postsService.create(
+      createPostDto,
+      session.passport.user.id,
+    );
   }
 
   @Get()
@@ -55,13 +58,21 @@ export class PostsController {
   @Patch(':id')
   @UseGuards(AuthenticatedGuard)
   @UsePipes(new ValidationPipe())
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postsService.update(id, updatePostDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updatePostDto: UpdatePostDto,
+    @Session() session: Record<string, any>,
+  ) {
+    return await this.postsService.update(
+      id,
+      updatePostDto,
+      session.passport.user.id,
+    );
   }
 
   @Delete(':id')
   @UseGuards(AuthenticatedGuard)
-  remove(@Param('id') id: string) {
-    return this.postsService.remove(id);
+  remove(@Param('id') id: string, @Session() session: Record<string, any>) {
+    return this.postsService.remove(id, session.passport.user.id);
   }
 }

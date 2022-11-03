@@ -3,3 +3,5 @@ demo_job_1:
     - ci
   script:
     - pnpm --version
+    - pnpm i
+    - pnpm start:dev    
